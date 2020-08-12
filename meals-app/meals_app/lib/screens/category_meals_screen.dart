@@ -14,7 +14,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   String catTitle;
   List<Meal> catMeals;
 
-  bool _loadedInit = false;
+  var _loadedInit = false;
   @override
   void initState() {
     // TODO: implement initState
