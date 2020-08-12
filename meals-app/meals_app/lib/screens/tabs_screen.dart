@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 import '../Screens/favourites_screen.dart';
 import '../screens/categories_screen.dart';
 
@@ -27,6 +28,8 @@ class _TabsScreenState extends State<TabsScreen> {
     //child:
     return Scaffold(
       appBar: AppBar(title: Text(_pages[_selectedPageIndex]['title'])),
+      drawer: MainDrawer(),
+
       // 1. First way of creating tabs in an app
       // bottom: TabBar(tabs: <Widget>[
       //   Tab(icon: Icon(Icons.category), text: 'Categories'),
