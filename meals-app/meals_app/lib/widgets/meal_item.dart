@@ -9,15 +9,15 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complex;
   final Affordability afford;
-  final Function removeItem;
-  MealItem(
-      {@required this.id,
-      @required this.title,
-      @required this.imageurl,
-      @required this.duration,
-      @required this.complex,
-      @required this.afford,
-      @required this.removeItem});
+
+  MealItem({
+    @required this.id,
+    @required this.title,
+    @required this.imageurl,
+    @required this.duration,
+    @required this.complex,
+    @required this.afford,
+  });
 
   String get complexText {
     switch (complex) {
@@ -60,7 +60,7 @@ class MealItem extends StatelessWidget {
         .then(
       (result) {
         if (result != null) {
-          removeItem(result);
+          //removeItem(result);
         }
       },
     );
