@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/product_detail_screen.dart';
 import './screens/products_overview_screen.dart';
+import './screens/product_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,14 +29,10 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold))),
       home: ProductsOverviewScreen(),
       //initialRoute: '/', // default is '/'
-      // routes: {
-      //   '/': (ctx) => TabsScreen(_favouriteMeals),
-      //   CategoryMealsScreen.routeName: (ctx) =>
-      //       CategoryMealsScreen(_availableMeals),
-      //   MealDetailScreen.routeName: (ctx) =>
-      //       MealDetailScreen(_toggleFavourite, _isMealFavourite),
-      //   FiltersScreen.routeName: (ctx) => FiltersScreen(_filters, _setFilters),
-      // },
+      routes: {
+        '/': (ctx) => ProductsOverviewScreen(),
+        ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+      },
     );
   }
 }
