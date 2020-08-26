@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/products_overview_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,15 +17,15 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green[400],
           primaryColorDark: Colors.black87,
           // canvasColor: Color.fromRGBO(255, 254, 229, 1),
-          fontFamily: 'Raleway',
+          fontFamily: 'Lato',
           textTheme: ThemeData.light().textTheme.copyWith(
               headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
               headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
               headline6: TextStyle(
                   fontSize: 20,
-                  fontFamily: 'RobotoCondensed',
+                  fontFamily: 'Anton',
                   fontWeight: FontWeight.bold))),
-      home: MyHomePage(),
+      home: ProductsOverviewScreen(),
       //initialRoute: '/', // default is '/'
       // routes: {
       //   '/': (ctx) => TabsScreen(_favouriteMeals),
@@ -38,16 +39,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Shopping Centre'),
-      ),
-      body: Center(
-        child: Text('Let\'s go shopping together! 😄🛍'),
-      ),
-    );
-  }
-}
+// class MyHomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Shopping Centre'),
+//       ),
+//       body: Center(
+//         child: Text('Let\'s go shopping together! 😄🛍'),
+//       ),
+//     );
+//   }
+// }
