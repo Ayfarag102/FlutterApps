@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           accentColor: Colors.green[400],
           primaryColorDark: Colors.black87,
-          canvasColor: Color.fromRGBO(255, 254, 229, 1),
+          // canvasColor: Color.fromRGBO(255, 254, 229, 1),
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
               headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 20,
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold))),
-      //  home: CategoriesScreen(),
+      home: MyHomePage(),
       //initialRoute: '/', // default is '/'
       // routes: {
       //   '/': (ctx) => TabsScreen(_favouriteMeals),
@@ -38,12 +38,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Shopping Centre'),
       ),
       body: Center(
-        child: Text('Navigation Time!'),
+        child: Text('Let\'s go shopping together! 😄🛍'),
       ),
     );
   }
