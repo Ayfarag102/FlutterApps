@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../models/product.dart';
+import '../providers/models/product.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -38,9 +38,32 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  // var _showFavOnly = false;
+
+  List<Product> get favItems {
+    return _items.where((product) => product.isFav).toList();
+  }
+
   List<Product> get items {
+    // if (_showFavOnly) {
+    //   return _items.where((product) => product.isFav).toList();
+    // }
     return [..._items];
   }
+
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
+  // void showFavOnly() {
+  //   _showFavOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavOnly = false;
+  //   notifyListeners();
+  // }
 
   void addProduct() {
     //  _items.add(value);

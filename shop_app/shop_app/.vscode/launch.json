@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+      "name": "shop_app",
+      "request": "launch",
+      "type": "dart"
+    },
+    // {
+    //   "name": "shop_app (Flutter)",
+    //   "program": "lib/main.dart",
+    //   "request": "launch",
+    //   "type": "dart"
+    // }
+  ]
+}
