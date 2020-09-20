@@ -38,10 +38,8 @@ class MyApp extends StatelessWidget {
             textTheme: ThemeData.light().textTheme.copyWith(
                 headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
                 headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-                headline6: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Anton',
-                    fontStyle: FontStyle.italic))),
+                headline6:
+                    TextStyle(fontSize: 15, fontStyle: FontStyle.italic))),
         // home: ProductsOverviewScreen(),
         //initialRoute: '/', // default is '/'
         routes: {
