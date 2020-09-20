@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/products_provider.dart';
 import '../providers/cart.dart';
 import './cart_screen.dart';
+import '../widgets/app_drawer.dart';
 
 enum FilterOptions { Favourites, All }
 
@@ -49,6 +50,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   Navigator.of(context).pushNamed(CartScreen.routeName);
                 })),
       ]),
+      drawer: AppDrawer(),
       body: ProductsGrid(_showOnlyFav),
     );
   }
