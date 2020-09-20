@@ -27,16 +27,15 @@ class ProductDetailScreen extends StatelessWidget {
                       Image.network(loadedProduct.imageUrl, fit: BoxFit.cover)),
               SizedBox(height: 10),
               Text('\$${loadedProduct.price}',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
-                  )),
+                  style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 width: double.infinity,
                 child: Text(loadedProduct.description,
-                    textAlign: TextAlign.center, softWrap: true),
+                    style: Theme.of(context).textTheme.headline6,
+                    textAlign: TextAlign.center,
+                    softWrap: true),
               )
             ],
           ),

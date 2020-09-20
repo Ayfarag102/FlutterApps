@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
                 headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
                 headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
                 headline6: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontFamily: 'Anton',
-                    fontWeight: FontWeight.bold))),
+                    fontStyle: FontStyle.italic))),
         // home: ProductsOverviewScreen(),
         //initialRoute: '/', // default is '/'
         routes: {
