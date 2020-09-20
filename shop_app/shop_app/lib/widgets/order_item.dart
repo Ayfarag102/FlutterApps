@@ -23,8 +23,13 @@ class _OrderItemState extends State<OrderItem> {
             ListTile(
                 title: Text('\$${widget.orderItem.amount.toStringAsFixed(2)}',
                     style: TextStyle(fontFamily: 'Lato')),
-                subtitle: Text(DateFormat('dd/MM/yyyy hh:mm')
-                    .format(widget.orderItem.dateTime)),
+                subtitle: Text(
+                    DateFormat(
+                      'dd/MM/yyyy hh:mm',
+                    ).format(widget.orderItem.dateTime),
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                    )),
                 trailing: IconButton(
                     icon:
                         Icon(_expanded ? Icons.expand_less : Icons.expand_more),
