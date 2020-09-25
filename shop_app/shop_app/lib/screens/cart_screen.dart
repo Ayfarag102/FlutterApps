@@ -73,7 +73,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
+    //  final cart = Provider.of<Cart>(context);
     return FlatButton(
         child: _isLoading ? CircularProgressIndicator() : Text('Checkout'),
         onPressed: (widget.cart.totalAmount <= 0 || _isLoading)

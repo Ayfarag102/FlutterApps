@@ -3,15 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/screens/user_products_screen.dart';
 
 //import 'package:shop_app/screens/product_detail_screen.dart';
-import './screens/products_overview_screen.dart';
+//import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/edit_product_screen.dart';
+import './screens/auth_screen.dart';
 
 import './providers/products_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
+import './providers/auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,9 +25,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => Products()),
+        ChangeNotifierProvider(create: (ctx) => Auth()),
         ChangeNotifierProvider(create: (ctx) => Cart()),
         ChangeNotifierProvider(create: (ctx) => Orders()),
+        ChangeNotifierProvider(create: (ctx) => Products()),
       ],
       child: MaterialApp(
         title: 'Shopping Centre',
@@ -43,15 +46,17 @@ class MyApp extends StatelessWidget {
                 headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
                 headline6:
                     TextStyle(fontSize: 15, fontStyle: FontStyle.italic))),
-        // home: ProductsOverviewScreen(),
+        home: AuthScreen(),
         //initialRoute: '/', // default is '/'
         routes: {
-          '/': (ctx) => ProductsOverviewScreen(),
+          //     '/': (ctx) => ProductsOverviewScreen(),
+
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
           UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-          EditProductScreen.routeName: (ctx) => EditProductScreen()
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
+          //  AuthScreen.routeName: (ctx) => AuthScreen(),
         },
       ),
     );

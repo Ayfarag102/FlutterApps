@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './cart.dart';
-import '../widgets/order_item.dart';
+//import '../widgets/order_item.dart';
 
 class OrderItem {
   final String id;
