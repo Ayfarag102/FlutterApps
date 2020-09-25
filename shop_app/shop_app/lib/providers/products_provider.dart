@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../providers/models/product.dart';
+import '../providers/models/http_exception.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -66,32 +67,7 @@ class Products with ChangeNotifier {
   //   _showFavOnly = false;
   //   notifyListeners();
   // }
-  Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://flutter-course-shop-app-734d5.firebaseio.com/products.json';
-
-    try {
-      final response = await http.get(url);
-      final getData = json.decode(response.body) as Map<String, dynamic>;
-      final List<Product> tempProducts = [];
-      getData.forEach((prodId, prodData) {
-        tempProducts.add(Product(
-          id: prodId,
-          name: prodData['name'],
-          description: prodData['description'],
-          price: prodData['price'],
-          imageUrl: prodData['imageUrl'],
-          isFav: prodData['isFav'],
-        ));
-      });
-      _items = tempProducts;
-      notifyListeners();
-      // print(json.decode(response.body));
-    } catch (er) {
-      throw (er);
-    }
-  }
-
+//  POST Request (Create Operation) => Products
   Future<void> addProduct(Product product) async {
     const url =
         'https://flutter-course-shop-app-734d5.firebaseio.com/products.json';
@@ -123,19 +99,76 @@ class Products with ChangeNotifier {
     //   print(json.decode(response.body));
   }
 
-  void updateProduct(String id, Product newProduct) {
+  //  GET Request (Read Operation) => Products
+  Future<void> fetchAndSetProducts() async {
+    const url =
+        'https://flutter-course-shop-app-734d5.firebaseio.com/products.json';
+
+    try {
+      final response = await http.get(url);
+      final getData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> tempProducts = [];
+      if (getData == null) {
+        return;
+      }
+      getData.forEach((prodId, prodData) {
+        tempProducts.add(Product(
+          id: prodId,
+          name: prodData['name'],
+          description: prodData['description'],
+          price: prodData['price'],
+          imageUrl: prodData['imageUrl'],
+          isFav: prodData['isFav'],
+        ));
+      });
+      _items = tempProducts;
+      notifyListeners();
+      // print(json.decode(response.body));
+    } catch (er) {
+      throw (er);
+    }
+  }
+
+//  PATCH Request (ie. Update Operation) => Products
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
 
     if (prodIndex >= 0) {
+      final url =
+          'https://flutter-course-shop-app-734d5.firebaseio.com/products/$id.json';
+      // try {
+      await http.patch(url,
+          body: json.encode({
+            'name': newProduct.name,
+            'description': newProduct.description,
+            'price': newProduct.price,
+            'imageUrl': newProduct.imageUrl,
+          }));
       _items[prodIndex] = newProduct;
       notifyListeners();
+      // } catch (err) {
+      //   print(err);
+      //   throw err;
+      // }
     } else {
       print('...');
     }
   }
 
-  void deleteProduct(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+//  DELETE Request (ie Delere Operation) => Products
+  Future<void> deleteProduct(String id) async {
+    final url =
+        'https://flutter-course-shop-app-734d5.firebaseio.com/products/$id.json';
+    final existProductID = _items.indexWhere((prod) => prod.id == id);
+    var existProduct = _items[existProductID];
+    _items.removeAt(existProductID);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existProductID, existProduct);
+      notifyListeners();
+      throw HttpException('Could not delete product');
+    }
+    existProduct = null;
   }
 }

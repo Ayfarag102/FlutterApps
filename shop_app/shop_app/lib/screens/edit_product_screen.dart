@@ -39,6 +39,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   @override
+  void dispose() {
+    _imageUrlFocusNode.removeListener(_updateImageUrl);
+    _priceFocusNode.dispose();
+    _descripFocusNode.dispose();
+    _imageUrlController.dispose();
+    _imageUrlFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   void didChangeDependencies() {
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
@@ -83,11 +93,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading = false;
-      });
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -107,23 +114,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
+      // finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     }
-  }
-
-  @override
-  void dispose() {
-    _imageUrlFocusNode.removeListener(_updateImageUrl);
-    _priceFocusNode.dispose();
-    _descripFocusNode.dispose();
-    _imageUrlController.dispose();
-    _imageUrlFocusNode.dispose();
-    super.dispose();
   }
 
   @override
