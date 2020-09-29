@@ -11,8 +11,9 @@ class Products with ChangeNotifier {
   // var _showFavOnly = false;
 
   final String authToken;
+  final String userID;
 
-  Products(this.authToken, this._items);
+  Products(this.authToken, this.userID, this._items);
 
   List<Product> get favItems {
     return _items.where((product) => product.isFav).toList();
@@ -51,7 +52,6 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
-          'isFav': product.isFav,
         }),
       );
       final newProduct = Product(
@@ -72,7 +72,7 @@ class Products with ChangeNotifier {
 
   //  GET Request (Read Operation) => Products
   Future<void> fetchAndSetProducts() async {
-    final url =
+    var url =
         'https://flutter-course-shop-app-734d5.firebaseio.com/products.json?auth=$authToken';
 
     try {
@@ -83,6 +83,11 @@ class Products with ChangeNotifier {
         print('null check');
         return;
       }
+      url =
+          'https://flutter-course-shop-app-734d5.firebaseio.com/userFavs/$userID.json?auth=$authToken';
+      final favResponse = await http.get(url);
+      final favData =
+          json.decode(favResponse.body.toString()) as Map<String, bool>;
       final List<Product> tempProducts = [];
       getData.forEach((prodId, prodData) {
         tempProducts.add(Product(
@@ -91,7 +96,7 @@ class Products with ChangeNotifier {
           description: prodData['description'],
           price: prodData['price'],
           imageUrl: prodData['imageUrl'],
-          isFav: prodData['isFav'],
+          isFav: favData == null ? false : favData[prodId] ?? false,
         ));
       });
       _items = tempProducts;

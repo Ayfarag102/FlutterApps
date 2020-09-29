@@ -25,19 +25,19 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFav(String token) async {
+  Future<void> toggleFav(String token, String currUID) async {
     final oldStatus = isFav;
 
     isFav = !isFav;
 
     notifyListeners();
     final url =
-        'https://flutter-course-shop-app-734d5.firebaseio.com/products/$id.json?auth=$token';
+        'https://flutter-course-shop-app-734d5.firebaseio.com/userFavs/$currUID/$id.json?auth=$token';
     try {
-      final response = await http.patch(url,
-          body: json.encode({
-            'isFav': isFav,
-          }));
+      final response = await http.put(url,
+          body: json.encode(
+            isFav,
+          ));
       if (response.statusCode >= 400) {
         _setFav(oldStatus);
         notifyListeners();
