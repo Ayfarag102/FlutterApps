@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/screens/products_overview_screen.dart';
 import 'package:shop_app/screens/user_products_screen.dart';
 
 //import 'package:shop_app/screens/product_detail_screen.dart';
@@ -25,15 +26,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => Auth()),
-        ChangeNotifierProvider(create: (ctx) => Cart()),
-        ChangeNotifierProvider(create: (ctx) => Orders()),
-        ChangeNotifierProvider(create: (ctx) => Products()),
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          create: null,
+          update: (ctx, auth, previous) =>
+              Products(auth.token, previous == null ? [] : previous.items),
+        ),
+        ChangeNotifierProvider.value(value: Cart()),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: null,
+          update: (ctx, auth, previous) =>
+              Orders(auth.token, previous == null ? [] : previous.orders),
+        ),
+        //  ChangeNotifierProvider.value(value: Products()),
       ],
-      child: MaterialApp(
-        title: 'Shopping Centre',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          title: 'Shopping Centre',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
             primarySwatch: Colors.green,
             accentColor: Colors.green[400],
             primaryColorDark: Colors.black87,
@@ -42,22 +55,24 @@ class MyApp extends StatelessWidget {
             // canvasColor: Color.fromRGBO(255, 254, 229, 1),
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
-                headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-                headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-                headline6:
-                    TextStyle(fontSize: 15, fontStyle: FontStyle.italic))),
-        home: AuthScreen(),
-        //initialRoute: '/', // default is '/'
-        routes: {
-          //     '/': (ctx) => ProductsOverviewScreen(),
-
-          ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-          CartScreen.routeName: (ctx) => CartScreen(),
-          OrdersScreen.routeName: (ctx) => OrdersScreen(),
-          UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-          EditProductScreen.routeName: (ctx) => EditProductScreen(),
-          //  AuthScreen.routeName: (ctx) => AuthScreen(),
-        },
+                  headline1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+                  headline2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+                  headline6:
+                      TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+                ),
+          ),
+          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
+          //initialRoute: '/', // default is '/'
+          routes: {
+            // ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
+            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+            CartScreen.routeName: (ctx) => CartScreen(),
+            OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+            EditProductScreen.routeName: (ctx) => EditProductScreen(),
+            //  AuthScreen.routeName: (ctx) => AuthScreen(),
+          },
+        ),
       ),
     );
   }

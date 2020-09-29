@@ -25,14 +25,14 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFav() async {
+  Future<void> toggleFav(String token) async {
     final oldStatus = isFav;
 
     isFav = !isFav;
 
     notifyListeners();
     final url =
-        'https://flutter-course-shop-app-734d5.firebaseio.com/products/$id.json';
+        'https://flutter-course-shop-app-734d5.firebaseio.com/products/$id.json?auth=$token';
     try {
       final response = await http.patch(url,
           body: json.encode({

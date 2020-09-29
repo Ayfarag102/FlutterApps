@@ -9,19 +9,6 @@ class OrdersScreen extends StatelessWidget {
 
   // var _isLoading = false;
 
-  // void initState() {
-  //   //Future.delayed(Duration.zero).then((_) async {
-  //   //    setState(() {
-  //   //   _isLoading = true;
-  //   //   });
-  //   // await ->
-  //   // Provider.of<Orders>(context, listen: false).fetchAndSetOrders().then((_) {
-  //   //   setState(() {
-  //   //     _isLoading = false;
-  //   //   });
-  //   // });
-  //   super.initState();
-
   // @override
   Future<void> _refreshOrders(BuildContext context) async {
     await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
