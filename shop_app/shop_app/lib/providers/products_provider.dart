@@ -52,6 +52,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
+          'creatorId': userID
         }),
       );
       final newProduct = Product(
@@ -71,9 +72,11 @@ class Products with ChangeNotifier {
   }
 
   //  GET Request (Read Operation) => Products
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userID"' : '';
     var url =
-        'https://flutter-course-shop-app-734d5.firebaseio.com/products.json?auth=$authToken';
+        'https://flutter-course-shop-app-734d5.firebaseio.com/products.json?auth=$authToken&$filterString';
 
     try {
       final response = await http.get(url);
