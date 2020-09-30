@@ -89,8 +89,7 @@ class Products with ChangeNotifier {
       url =
           'https://flutter-course-shop-app-734d5.firebaseio.com/userFavs/$userID.json?auth=$authToken';
       final favResponse = await http.get(url);
-      final favData =
-          json.decode(favResponse.body.toString()) as Map<String, bool>;
+      final favData = json.decode(favResponse.body.toString());
       final List<Product> tempProducts = [];
       getData.forEach((prodId, prodData) {
         tempProducts.add(Product(
@@ -104,7 +103,7 @@ class Products with ChangeNotifier {
       });
       _items = tempProducts;
       notifyListeners();
-      print(json.decode(response.body));
+      debugPrint(response.body);
     } catch (er) {
       print(er);
       throw (er);
