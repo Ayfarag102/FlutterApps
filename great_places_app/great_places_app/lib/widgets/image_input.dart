@@ -23,13 +23,13 @@ class _ImageInputState extends State<ImageInput> {
       maxWidth: 600,
       source: ImageSource.camera,
     );
+    if (imageFile == null) {
+      debugPrint('No image selected');
+      return;
+    }
 
     setState(() {
-      if (imageFile != null) {
-        _storedImage = File(imageFile.path);
-      } else {
-        debugPrint('No image selected');
-      }
+      _storedImage = File(imageFile.path);
     });
 
     final appDir = await syspaths.getApplicationDocumentsDirectory();
