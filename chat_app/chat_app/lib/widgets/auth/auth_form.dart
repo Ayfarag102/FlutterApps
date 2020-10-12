@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:chat_app/widgets/users/avatar_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +15,7 @@ class AuthForm extends StatefulWidget {
     String email,
     String password,
     String userName,
+    File image,
     bool isLogin,
     BuildContext context,
   ) submitFn;
@@ -28,19 +31,31 @@ class _AuthFormState extends State<AuthForm> {
   var _userEmail = '';
   var _userPass = '';
   var _userName = '';
+  File _imageFile;
+
+  void _storeImage(File image) {
+    _imageFile = image;
+  }
+
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
+    if (_imageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Please pick an image.'),
+            backgroundColor: Theme.of(context).errorColor),
+      );
+      return;
+    }
     if (isValid) {
       _formKey.currentState.save();
-      // debugPrint(_userEmail);
-      // debugPrint(_userName);
-      // debugPrint(_userPass);
 
       widget.submitFn(
         _userEmail.trim(),
         _userPass.trim(),
         _userName.trim(),
+        _imageFile,
         _isLogin,
         context,
       );
@@ -59,6 +74,7 @@ class _AuthFormState extends State<AuthForm> {
                 key: _formKey,
                 child:
                     Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  if (!_isLogin) UserAvatarImage(_storeImage),
                   TextFormField(
                       key: ValueKey('email'),
                       validator: (val) {
