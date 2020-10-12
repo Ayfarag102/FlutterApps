@@ -17,7 +17,11 @@ class _UserAvatarImageState extends State<UserAvatarImage> {
   void _pickImage() async {
     //  Can create a dialog and based on user input we open Image source gallery or camera
     final picker = ImagePicker();
-    final imageFile = await picker.getImage(source: ImageSource.camera);
+    final imageFile = await picker.getImage(
+      source: ImageSource.camera,
+      imageQuality: 50,
+      maxWidth: 150,
+    );
     if (imageFile == null) {
       debugPrint('No image selected');
       return;
